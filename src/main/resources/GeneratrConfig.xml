@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<!DOCTYPE generatorConfiguration 
+PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" 
+"http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+	<!--导入属性配置 -->
+	<properties resource="mysql.properties" />
+	<context id="default" targetRuntime="MyBatis3">
+		<property name="javaFileEncoding" value="UTF-8" />
+		<!-- 生成的pojo，将implements Serializable -->
+		<plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
+		<!-- 生成的pojo里面有toString方法 -->
+		<plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+		
+		<!-- 控制生成的内容 -->
+		<commentGenerator type="com.ntkd.MyCommentGenerator" />
+
+		<!-- 数据库链接URL、用户名、密码 -->
+		<jdbcConnection driverClass="${jdbc.driver}"
+			connectionURL="${jdbc.url}" userId="${jdbc.username}"
+			password="${jdbc.password}">
+			<property name="useInformationSchema" value="true" />
+		</jdbcConnection>
+
+
+		<!-- 非必需，类型处理器，在数据库类型和java类型之间的转换控制 -->
+		<javaTypeResolver>
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+
+		<!--javaModelGenerator生成对象 -->
+		<javaModelGenerator targetPackage="com.yyc.entity"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+			<!-- 从数据库返回的值被清理前后的空格 -->
+			<property name="trimStrings" value="true" />
+			<property name="constructorBased" value="true" />
+		</javaModelGenerator>
+
+		<!--sqlMapGenerator 生成xxxMapper.xml -->
+		<sqlMapGenerator targetPackage="com.yyc.dao"
+			targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+
+		<!-- javaClientGenerator 生成 xxxxMapper.java接口文件 -->
+		<javaClientGenerator type="XMLMAPPER"
+			targetPackage="com.yyc.dao" targetProject="./src/main/java">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+
+		<!-- 列出要生成代码的所有表,tableName数据库表，domainObjectName类名 -->
+		<table tableName="sys_user" domainObjectName="User"
+			enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false"
+			selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+
+	</context>
+</generatorConfiguration>
